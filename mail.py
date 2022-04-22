@@ -37,3 +37,7 @@ def send_mail(*files):
     server.login(from_mail, password)
 
     server.send_message(msg, from_addr=from_mail, to_addrs=[to_mail])
+
+
+if __name__ == '__main__':
+    send_mail('all.csv', 'off-to-on.csv')
