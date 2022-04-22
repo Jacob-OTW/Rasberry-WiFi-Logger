@@ -4,6 +4,7 @@ from os.path import basename
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
+from log import write
 
 
 def send_mail(*files):
@@ -40,4 +41,7 @@ def send_mail(*files):
 
 
 if __name__ == '__main__':
-    send_mail('all.csv', 'off-to-on.csv')
+    try:
+        send_mail('all.csv', 'off-to-on.csv')
+    except Exception as e:
+        write('waiting.csv', [True, e])
