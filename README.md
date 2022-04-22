@@ -18,3 +18,4 @@ steps:
 -(Optional) enable SSH and set a static IP for the Raspberry in your router.
 - Create a crontab task, crontab -e. add "* * * * * cd {dir}; python log.py" to the crontab file to run every minute
 - Create a crontab task for the emails, "0 0 * * * cd {dir}; python mail.py" to send an email with the 2 CSV files every day at midnight. (0 0 * * 6 for every Saturday at midnight)
+- Create a crontab task for the lost emails, "0 1 * * * cd {dir}; python up-keep.py" to send any lost emails.
