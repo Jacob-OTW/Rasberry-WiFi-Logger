@@ -4,6 +4,24 @@ import os
 import datetime
 
 
+def session_for_src_addr(addr: str) -> requests.Session:
+    """
+    Create `Session` which will bind to the specified local address
+    rather than auto-selecting it.
+    """
+    session = requests.Session()
+    for prefix in ('http://', 'https://'):
+        session.get_adapter(prefix).init_poolmanager(
+            # those are default values from HTTPAdapter's constructor
+            connections=requests.adapters.DEFAULT_POOLSIZE,
+            maxsize=requests.adapters.DEFAULT_POOLSIZE,
+            # This should be a tuple of (address, port). Port 0 means auto-selection.
+            source_address=(addr, 0),
+        )
+
+    return session
+
+
 def write(filename, row: list):  # Write to csv file
     f = open(filename, 'a', newline='')
     writer = csv.writer(f)
@@ -16,7 +34,8 @@ url = 'https://google.com'
 timeout = 10
 
 try:
-    request = requests.get(url, timeout=timeout)
+    s = session_for_src_addr('192.168.186.95')
+    s.get(url, timeout=timeout)
     connection = True
 except (requests.ConnectionError, requests.Timeout) as exception:
     connection = False
