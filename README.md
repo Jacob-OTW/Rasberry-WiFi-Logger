@@ -12,6 +12,7 @@ libs you'll need to install:
 
 steps:
 - Connect to the internet via Wi-Fi or ethernet.
+- Enable auto-reconnect for Wi-Fi, "cd /etc/ifplugd/action.d/" "cp /etc/wpa_supplicant/ifupdown.sh /etc/ifplugd/action.d/ifupdown"
 - Clone the repo to your raspberry with "git clone https://github.com/Jacob-OTW/Raspberry-WiFi-Logger.git"
 - set the password, from_mail, and to_mail variables to your desired address, if you use a different SMTP server than google you'll
   have to change the arguments for the "smtplib.SMTP" and "server.connect" lines.
