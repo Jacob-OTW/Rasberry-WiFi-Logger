@@ -12,7 +12,7 @@ libs you'll need to install:
 
 steps:
 - Connect to the internet via Wi-Fi or ethernet.
-- (Opptional) If you are trying to log an enterprise wifi network, you'll need to go through a few more steps to connect. In the enterprise.txt file you'll find all the lines that need to be added.
+- (Optional) If you are trying to log an enterprise wifi network, you'll need to go through a few more steps to connect. In the enterprise.txt file you'll find all the lines that need to be added.
  
 - Enable auto-reconnect for Wi-Fi, "cd /etc/ifplugd/action.d/" "cp /etc/wpa_supplicant/ifupdown.sh /etc/ifplugd/action.d/ifupdown"
 - Clone the repo to your raspberry with "git clone https://github.com/Jacob-OTW/Raspberry-WiFi-Logger.git"
