@@ -15,7 +15,7 @@ steps:
 - (Optional) If you are trying to log an enterprise wifi network, you'll need to go through a few more steps to connect. In the enterprise.txt file you'll find all the lines that need to be added.
 - Enable auto-reconnect for Wi-Fi, "cd /etc/ifplugd/action.d/" "cp /etc/wpa_supplicant/ifupdown.sh /etc/ifplugd/action.d/ifupdown"
 - Clone the repo to your raspberry with "git clone https://github.com/Jacob-OTW/Raspberry-WiFi-Logger.git"
-- set the password, from_mail, and to_mail variables to your desired address, if you use a different SMTP server than google you'll
+- in "mail.py" set the password, from_mail, and to_mail variables to your desired address, if you use a different SMTP server than google you'll
   have to change the arguments for the "smtplib.SMTP" and "server.connect" lines.
 - (Optional) enable SSH and set a static IP for the Raspberry, you'll find the lines that need to be added to "/etc/dhcpcd.conf" in static_ip.txt in the repo. If you plug in an ethernet cable before you added it to the dhcpcd file, you might need to delete the default route for eth0 "sudo ip route del default" otherwise it might try to route internet traffic through ethernet.
 - Create a crontab task, crontab -e. add "* * * * * cd {dir}; python log.py &" to the crontab file to run every minute
