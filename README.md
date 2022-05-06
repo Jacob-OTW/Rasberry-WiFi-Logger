@@ -1,6 +1,6 @@
 # Raspberry-WiFi-Logger
 This script is meant to run via crontab task and a Gmail account.
-When log.py is run, it will check if a connection to google.com is possible, if so, it will add a boolean and timestamp to the all.csv file.
+When log.py is ran, it will check if a connection to google.com is possible, if so, it will add a boolean and timestamp to the all.csv file.
 if the connection works and the previous boolean value added to the all.csv file is False, it will add to the off-to-on.csv saying that the
 connection was restored with a timestamp. It's the same the other way around, if the connection doesn't work but the previous boolean value was true it will
 write that the connection was lost with a timestamp.
