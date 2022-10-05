@@ -7,13 +7,11 @@ from email.mime.application import MIMEApplication
 from log import write
 
 
-def send_mail(*files):
+def send_mail(*files, subject=f'Log files {datetime.datetime.now().strftime("%d.%b.%Y %H:%M:%S")}'):
     password = ''
     from_mail = ''
     to_mail = ''
-    x = datetime.datetime.now()
-    subject = f'Log files {x.strftime("%d.%b.%Y %H:%M:%S")}'
-    body = 'Text'
+    body = 'Leer hier...'
 
     msg = MIMEMultipart()
     msg['from'] = from_mail
@@ -22,8 +20,7 @@ def send_mail(*files):
     body = MIMEText(body, 'plain')
     msg.attach(body)
 
-    for file in files:
-        filename = file
+    for filename in files:
         with open(filename, 'r') as f:
             attachment = MIMEApplication(f.read(), Name=basename(filename))
             attachment['Content-Disposition'] = f'attachment; filename="{basename(filename)}"'
