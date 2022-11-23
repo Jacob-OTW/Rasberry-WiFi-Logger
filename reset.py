@@ -5,5 +5,5 @@ def reset(file, content):
 
 
 if __name__ == '__main__':
-    reset('all.csv', "status,latency,date\n")
-    reset('off-to-on.csv', "status,date\n")
+    reset('all.csv', "status,latency,date,ap\n")
+    reset('off-to-on.csv', "status,date,ap\n")

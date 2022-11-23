@@ -1,40 +1,49 @@
 import requests
 import csv
-import os
 import datetime
+import os
 
 
-def write(filename, row: list):  # Write to csv file
+def write(filename, row: list):
     with open(filename, 'a', newline='') as f:
         csv.writer(f).writerow(row)
-        f.close()
 
 
 def log():
-    url = 'https://google.com'
-    timeout = 10
-
-    req = None
     try:
-        req = requests.get(url, timeout=timeout)
+        req = requests.get('https://google.com', timeout=10)
         connection = True
-    except (requests.ConnectionError, requests.Timeout) as exception:
+    except (requests.ConnectionError, requests.Timeout):
+        req = None
         connection = False
 
-    if os.stat('all.csv').st_size != 0:  # Make sure file isn't emtpy
+    try:
         with open("all.csv") as file:
-            lines = file.readlines()
-        last_line_status = lines[-1].split(',')[0]
-    else:
+            for last_item in csv.DictReader(file):
+                pass
+        last_line_status = {"True": True, "False": False}.get(last_item.get("status"))
+    except UnboundLocalError:
         last_line_status = connection
 
-    # Handle writing to file
-    get_dict = {(True, "False"): "Reconnected", (False, "True"): "Disconnected"}
+    get_dict = {(True, False): "Reconnected", (False, True): "Disconnected"}
     x = datetime.datetime.now()
+    if connection is True:
+        out = os.popen(r"/usr/sbin/iwconfig wlan0 | sed -n 's/.*Access Point: \([0-9\:A-F]\{17\}\).*/\1/p'")
+        ap = out.read().replace('\n', '')
+    else:
+        with open("all.csv") as file:
+            for line in csv.DictReader(file):
+                pass
+            try:
+                ap = line.get("ap")
+            except UnboundLocalError:
+                ap = None
     if (connection, last_line_status) in get_dict:
         status = get_dict.get((connection, last_line_status))
-        write('off-to-on.csv', [f'{status}', x.strftime("%d.%b.%Y %H:%M:%S")])
-    write('all.csv', [connection, round(req.elapsed.total_seconds() * 1000, 2) if req is not None else None, x.strftime("%d.%b.%Y %H:%M:%S")])
+
+        write('off-to-on.csv', [f'{status}', x.strftime("%d.%b.%Y %H:%M:%S"), ap])
+    write('all.csv', [connection, round(req.elapsed.total_seconds() * 1000, 2) if req is not None else None,
+                      x.strftime("%d.%b.%Y %H:%M:%S"), ap])
 
 
 if __name__ == '__main__':
