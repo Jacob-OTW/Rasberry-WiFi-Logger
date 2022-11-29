@@ -1,5 +1,6 @@
 import datetime
 import smtplib
+import ssl
 from os.path import basename
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -7,11 +8,10 @@ from email.mime.application import MIMEApplication
 from log import write
 
 
-def send_mail(*files, subject=f'Log files {datetime.datetime.now().strftime("%d.%b.%Y %H:%M:%S")}'):
-    password = ''
-    from_mail = ''
-    to_mail = ''
-    body = 'Leer hier...'
+def send_mail(*files, to_mail="<Mail Address>", subject=f"R2 Log files {datetime.datetime.now().strftime('%d.%b.%Y %H:%M:%S')}"):
+    password = '<password>'
+    from_mail = '<Mail Address>'
+    body = 'Log from Raspberry'
 
     msg = MIMEMultipart()
     msg['from'] = from_mail
@@ -21,19 +21,18 @@ def send_mail(*files, subject=f'Log files {datetime.datetime.now().strftime("%d.
     msg.attach(body)
 
     for filename in files:
+        filename: str
         with open(filename, 'r') as f:
             attachment = MIMEApplication(f.read(), Name=basename(filename))
             attachment['Content-Disposition'] = f'attachment; filename="{basename(filename)}"'
 
         msg.attach(attachment)
+        
+    context = ssl.create_default_context()
 
-    server = smtplib.SMTP("smtp.gmail.com", 587)
-    server.connect('smtp.gmail.com', 587)
-    server.ehlo()
-    server.starttls()
+    server = smtplib.SMTP_SSL("<URL HERE>", 465, context=context)
     server.ehlo()
     server.login(from_mail, password)
-
     server.send_message(msg, from_addr=from_mail, to_addrs=[to_mail])
 
 
