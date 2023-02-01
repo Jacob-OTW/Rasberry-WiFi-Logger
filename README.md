@@ -31,10 +31,11 @@ If a gateway for eth0 was already created, run ```sudo ip route del default``` t
 
 - Add the following crontabs
 ```
-* * * * * cd {dir}; python log.py &
-0 0 * * * cd {dir}; python mail.py &
-0 1 * * * cd {dir}; python up-keep.py &
+* * * * * cd Raspberry-WiFi-Logger; python log.py &
+0 0 * * * cd Raspberry-WiFi-Logger; python mail.py &
+0 1 * * * cd Raspberry-WiFi-Logger; python up-keep.py &
 ```
+(if you didn't clone the repo to the default directroy, you'll need to change the path for the ```cd``` command)
 This will 
 1. check for a connection every minute. 2. 
 2. email you every day at midnight. 3. 
