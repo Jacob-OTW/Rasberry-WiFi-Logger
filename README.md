@@ -35,7 +35,7 @@ If a gateway for eth0 was already created, run ```sudo ip route del default``` t
 0 0 * * * cd Raspberry-WiFi-Logger; python mail.py &
 0 1 * * * cd Raspberry-WiFi-Logger; python up-keep.py &
 ```
-(if you didn't clone the repo to the default directroy, you'll need to change the path for the ```cd``` command)
+(if you didn't clone the repo to the default directory, you'll need to change the path for the ```cd``` command)
 This will 
 1. check for a connection every minute. 2. 
 2. email you every day at midnight. 3. 
