@@ -6,15 +6,13 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 from log import write
+from config import sending_email, sending_email_password, receiving_email, smtp_server, smtp_port
 
 
-def send_mail(*files, to_mail="<Mail Address>", subject=f"R2 Log files {datetime.datetime.now().strftime('%d.%b.%Y %H:%M:%S')}"):
-    password = '<password>'
-    from_mail = '<Mail Address>'
-    body = 'Log from Raspberry'
-
+def send_mail(*files, to_mail=receiving_email, subject=f"Log files {datetime.datetime.now().strftime('%d.%b.%Y %H:%M:%S')}"):
+    body = 'Log files from Raspberry Pi'
     msg = MIMEMultipart()
-    msg['from'] = from_mail
+    msg['from'] = sending_email
     msg['to'] = to_mail
     msg['subject'] = subject
     body = MIMEText(body, 'plain')
@@ -30,10 +28,10 @@ def send_mail(*files, to_mail="<Mail Address>", subject=f"R2 Log files {datetime
         
     context = ssl.create_default_context()
 
-    server = smtplib.SMTP_SSL("<URL HERE>", 465, context=context)
+    server = smtplib.SMTP_SSL(smtp_server, smtp_port, context=context)
     server.ehlo()
-    server.login(from_mail, password)
-    server.send_message(msg, from_addr=from_mail, to_addrs=[to_mail])
+    server.login(sending_email, sending_email_password)
+    server.send_message(msg, from_addr=sending_email, to_addrs=[to_mail])
 
 
 if __name__ == '__main__':
