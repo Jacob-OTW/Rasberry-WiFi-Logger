@@ -19,7 +19,8 @@ pip install email
 - Clone the repo to your raspberry with ```git clone https://github.com/Jacob-OTW/Raspberry-WiFi-Logger.git```
 - Fill out the ```config.py``` file. 
 - (Optional, but recommended for remote maintenance) Enable SSH and set a static IP for the Raspberry, add the following lines to ```/etc/dhcpcd.conf```
-```interface eth0
+```
+interface eth0
   static ip_address={ip}/24
   static routers={default_gateway}
   static domain_name_server={default_gateway}
